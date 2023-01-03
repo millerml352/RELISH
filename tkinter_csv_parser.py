@@ -3,7 +3,7 @@ import csv
 
 # Read data from the .csv file
 data = []
-with open('./parcel_ownership_noheader.csv') as csvfile:
+with open('./data/parcel_ownership_noheader.csv') as csvfile:
     reader = csv.reader(csvfile)
     for row in reader:
         data.append(row)
@@ -37,11 +37,9 @@ selected_frame.pack()
 
 # Add a label for each column
 labels = []
-for i in range(len(headers[0:10])):
-    # Calculate the row index for the label
-    row = i // 2  # Integer division to get the row index
+for i in range(len(headers)):
     label = tk.Label(selected_frame, text=headers[i], anchor=tk.W)
-    label.grid(row=row, column=0, sticky=tk.W)
+    label.grid(row=i, column=0, sticky=tk.W)
     labels.append(label)
 
 # Define a function to update the selected labels when the selection changes
@@ -58,12 +56,10 @@ def on_select(event):
         selected_index = selection[0]
         selected_row = data[selected_index]
         for i in range(len(selected_row)):
-            # Calculate the row index for the label
-            row = i // 2  # Integer division to get the row index
             label = tk.Label(selected_frame, text=headers[i] + ": ", anchor=tk.W)
-            label.grid(row=row, column=0, sticky=tk.W)
+            label.grid(row=i, column=0, sticky=tk.W)
             labels[i] = label
-            tk.Label(selected_frame, text=selected_row[i], anchor=tk.W).grid(row=row, column=1, sticky=tk.W, columnspan=2)
+            tk.Label(selected_frame, text=selected_row[i], anchor=tk.W).grid(row=i, column=1, sticky=tk.W)
 
 # Set the listbox's selectmode and bind the on_select function to the listbox's "<<ListboxSelect>>" event
 listbox.config(selectmode=tk.SINGLE, exportselection=False)
